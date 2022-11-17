@@ -71,4 +71,4 @@ systemctl start redis
     - [vps](jenkins/pipeline/vps)
   ![ci](jenkins/img/jenkins.jpg)
 * TeleGramBot 發送訊息呈現圖
-  ![grafana](monitor/telegrambot.jpg)
+![grafana](monitor/telegrambot.jpg)
