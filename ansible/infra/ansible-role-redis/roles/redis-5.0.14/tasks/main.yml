@@ -1,0 +1,13 @@
+---
+
+- include_tasks: install.yml
+
+- include_tasks: configure.yml
+
+- include_tasks: kernel.yml
+
+- name: Enable service on Boot & Start redis service
+  service:
+    enabled: yes
+    name: "{{ redis_daemon }}"
+    state: started

@@ -1,0 +1,30 @@
+[Unit]
+Description=MongoDB Database Server 2.6.9
+After=network.target
+
+[Service]
+Type=forking
+User=mongod
+Group=mongod
+PIDFile=/opt/mongodb/pid/mongod.pid
+ExecStart=/opt/mongodb/bin/mongod --config /opt/mongodb/mongod.conf --dbpath /opt/mongodb/data
+ExecStartPre=/usr/bin/chown -R mongod:mongod /opt/mongodb
+ExecStartPre=/usr/bin/chmod 0755 /opt/mongodb/pid
+PermissionsStartOnly=true
+PrivateTmp=true
+LimitNOFILE=64000
+TimeoutStartSec=180
+
+# (file size)
+LimitFSIZE=infinity
+# (cpu time)
+LimitCPU=infinity
+# (virtual memory size)
+LimitAS=infinity
+# (open files)
+LimitNOFILE=64000
+# (processes/threads)
+LimitNPROC=64000
+
+[Install]
+WantedBy=multi-user.target

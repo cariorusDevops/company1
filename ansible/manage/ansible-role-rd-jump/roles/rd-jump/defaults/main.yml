@@ -1,0 +1,4 @@
+---
+jump_key_path: "{{ role_path }}/files/jump_key"
+
+notebook_key_path: "{{ role_path }}/files/notebook_key"

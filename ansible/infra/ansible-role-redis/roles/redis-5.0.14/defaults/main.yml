@@ -1,0 +1,33 @@
+---
+# install require
+redis_path: /opt/redis
+
+redis_directory:
+  - log
+  - pid
+  - cluster
+
+redis_bin:
+  - redis-cli
+  - redis-server
+  - redis-benchmark
+  - redis-sentinel
+  - redis-check-aof
+  - redis-check-rdb
+
+## redis config
+redis_port: 6379
+redis_bind: 0.0.0.0
+redis_timeout: 0
+
+redis_daemonize: "yes"
+redis_supervised: systemd
+
+redis_loglevel: notice
+redis_logfile: "{{ redis_path }}/log/redis.log"
+redis_pidfile: "{{ redis_path }}/pid/redis-server.pid"
+
+redis_password: "global!#"
+
+redis_cluster_enable: "yes"
+redis_cluster_config: "{{ redis_path }}/cluster/nodes-6379.conf"

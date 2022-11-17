@@ -1,0 +1,121 @@
+[
+  {
+    "name": "prod-ansible",
+    "type": "t3.small",
+    "size": 30,
+    "ip_v4": "10.9.24.10",
+    "ami_name": "terraform-u2-ansible"
+  },
+  {
+    "name": "prod-job-01",
+    "type": "t3.xlarge",
+    "size": 100,
+    "ip_v4": "10.9.24.21",
+    "ami_name": "terraform-u2-job-01"
+  },
+  {
+    "name": "prod-gateway-01",
+    "type": "t3.xlarge",
+    "size": 100,
+    "ip_v4": "10.9.24.41",
+    "ami_name": "terraform-u2-gateway-01"
+  },
+  {
+    "name": "prod-gateway-02",
+    "type": "t3.xlarge",
+    "size": 100,
+    "ip_v4": "10.9.24.42",
+    "ami_name": "terraform-u2-gateway-02"
+  },
+  {
+    "name": "prod-zookeeper-01",
+    "type": "c5.xlarge",
+    "size": 100,
+    "ip_v4": "10.9.24.51",
+    "ami_name": "terraform-u2-zookeeper-01"
+  },
+  {
+    "name": "prod-zookeeper-02",
+    "type": "c5.xlarge",
+    "size": 100,
+    "ip_v4": "10.9.24.52",
+    "ami_name": "terraform-u2-zookeeper-02"
+  },
+  {
+    "name": "prod-zookeeper-03",
+    "type": "c5.xlarge",
+    "size": 100,
+    "ip_v4": "10.9.24.53",
+    "ami_name": "terraform-u2-zookeeper-03"
+  },
+  {
+    "name": "prod-monitor-01",
+    "type": "t3.large",
+    "size": 100,
+    "ip_v4": "10.9.24.61",
+    "ami_name": "terraform-u2-monitor-01"
+  },
+  {
+    "name": "prod-monitor-02",
+    "type": "t3.large",
+    "size": 100,
+    "ip_v4": "10.9.24.62",
+    "ami_name": "terraform-u2-monitor-02"
+  },
+  {
+    "name": "prod-logstash-01",
+    "type": "c5.xlarge",
+    "size": 100,
+    "ip_v4": "10.9.24.71",
+    "ami_name": "terraform-u2-logstash-01"
+  },
+  {
+    "name": "prod-kibana-01",
+    "type": "t3.medium",
+    "size": 100,
+    "ip_v4": "10.9.24.91",
+    "ami_name": "terraform-u2-kibana-01"
+  },
+  {
+    "name": "prod-rabbitmq-01",
+    "type": "c5.xlarge",
+    "size": 50,
+    "ip_v4": "10.9.24.121",
+    "ami_name": "terraform-u2-rabbitmq-01"
+  },
+  {
+    "name": "prod-rabbitmq-02",
+    "type": "c5.xlarge",
+    "size": 50,
+    "ip_v4": "10.9.24.122",
+    "ami_name": "terraform-u2-rabbitmq-02"
+  },
+  {
+    "name": "prod-rabbitmq-03",
+    "type": "c5.xlarge",
+    "size": 50,
+    "ip_v4": "10.9.24.123",
+    "ami_name": "terraform-u2-rabbitmq-03"
+  },
+  {
+    "name": "prod-elasticsearch-log-01",
+    "type": "t3.2xlarge",
+    "size": 250,
+    "ip_v4": "10.9.24.137",
+    "ami_name": "terraform-u2-elasticsearch-log-01"
+  },
+  {
+    "name": "prod-elasticsearch-log-02",
+    "type": "t3.2xlarge",
+    "size": 250,
+    "ip_v4": "10.9.24.138",
+    "ami_name": "terraform-u2-elasticsearch-log-02"
+  },
+  {
+    "name": "prod-elasticsearch-log-03",
+    "type": "t3.2xlarge",
+    "size": 250,
+    "ip_v4": "10.9.24.139",
+    "ami_name": "terraform-u2-elasticsearch-log-03"
+  }
+]

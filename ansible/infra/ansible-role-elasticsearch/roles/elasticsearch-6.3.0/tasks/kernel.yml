@@ -1,0 +1,47 @@
+---
+- name: Add 'session required pam_limits.so' rule in '/etc/pam.d/login'
+  lineinfile:
+    path: /etc/pam.d/login
+    regexp: 'pam_limits.so'
+    line: "session    required\tpam_limits.so"
+    state: present
+
+- name: File number limit (soft)
+  pam_limits:
+    dest: /etc/security/limits.conf
+    domain: '*'
+    limit_type: soft
+    limit_item: nofile
+    value: '65536'
+
+- name: File number limit (hard)
+  pam_limits:
+    dest: /etc/security/limits.conf
+    domain: '*'
+    limit_type: hard
+    limit_item: nofile
+    value: '65536'
+
+- name: User thread limit (soft)
+  pam_limits:
+    dest: /etc/security/limits.conf
+    domain: '*'
+    limit_type: soft
+    limit_item: nproc
+    value: '65536'
+
+- name: User thread limit (hard)
+  pam_limits:
+    dest: /etc/security/limits.conf
+    domain: '*'
+    limit_type: hard
+    limit_item: nproc
+    value: '65536'
+
+- name: vm.max_map_count
+  sysctl:
+    reload: yes
+    sysctl_file: /etc/sysctl.conf
+    name: vm.max_map_count
+    value: '655360'
+    state: present

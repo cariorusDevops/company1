@@ -1,0 +1,33 @@
+---
+- name: Check group '{{ es_system_group }}' exists
+  getent:
+    database: group
+    key: {{ es_system_group }}
+    fail_key: no
+  register: rt_group
+
+- name: Create group '{{ es_system_group }}'
+  group:
+    name: {{ es_system_group }}
+    state: present
+  when: 
+    - not rt_group.ansible_facts.getent_group[es_system_group]
+
+- name: Check user '{{ es_system_user }}' exists
+  getent:
+    database: passwd
+    key: {{ es_system_user }}
+    fail_key: no
+  register: rt_user
+
+- name: Create user '{{ es_system_user }}'
+  user:
+    create_home: yes
+    name: {{ es_system_user }}
+    group: {{ es_system_group }}
+    {% if append_groups['enabled'] -%}
+    groups: {{ append_groups['groups'] }}
+    {% endif -%}
+    append: yes
+  when:
+    - not rt_user.ansible_facts.getent_passwd[es_system_user]

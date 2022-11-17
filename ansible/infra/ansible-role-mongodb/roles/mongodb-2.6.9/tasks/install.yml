@@ -1,0 +1,73 @@
+---
+- name: Mongodb node hostname add to '/etc/hosts'
+  lineinfile:
+    path: /etc/hosts
+    regexp: "^{{ hostvars[item]['ansible_host'] }}"
+    line: "{{ hostvars[item]['ansible_host'] }} {{ hostvars[item]['ansible_hostname'] }}"
+    state: present
+  loop: "{{ groups[thegroups] }}"
+
+- name: Check group '{{ mongodb_system_group }}' exists
+  getent:
+    database: group
+    key: "{{ mongodb_system_group }}"
+    fail_key: no
+  register: rt_group
+
+- name: Create group '{{ mongodb_system_group }}'
+  group:
+    name: "{{ mongodb_system_group }}"
+    state: present
+  when:
+    - not rt_group.ansible_facts.getent_group[mongodb_system_group]
+
+- name: Check user '{{ mongodb_system_user }}' exists
+  getent:
+    database: passwd
+    key: "{{ mongodb_system_user }}"
+    fail_key: no
+  register: rt_user
+
+- name: Create '{{ mongodb_system_user }}' user
+  user:
+    home: "{{ mongodb_system_home }}"
+    name: "{{ mongodb_system_user }}"
+    group: "{{ mongodb_system_group }}"
+    create_home: no
+    shell: /bin/false
+  when:
+    - not rt_user.ansible_facts.getent_passwd[mongodb_system_user]
+
+- name: Check '{{ mongodb_path }}-linux-x86_64-{{ mongodb_version }}.tgz' exists
+  stat:
+    path: "{{ mongodb_path }}-linux-x86_64-{{ mongodb_version }}.tgz"
+  register: rt_tar
+
+- name: Copy 'mongodb-linux-x86_64-{{ mongodb_version }}.tgz'
+  copy:
+    src: "mongodb-linux-x86_64-{{ mongodb_version }}.tgz"
+    dest: "{{ mongodb_install_dir }}"
+  when: not rt_tar.stat.exists
+
+- name: Check '{{ mongodb_path }}' exists
+  stat:
+    path: "{{ mongodb_path }}"
+  register: rt_path
+
+- name: Extract 'mongodb-linux-x86_64-{{ mongodb_version }}.tgz' tarball
+  unarchive:
+    src: "{{ mongodb_path }}-linux-x86_64-{{ mongodb_version }}.tgz"
+    dest: "{{ mongodb_install_dir }}"
+    remote_src: yes
+  when: not rt_path.stat.exists
+
+- name: Rename '{{ mongodb_path }}-linux-x86_64-{{ mongodb_version }}' become '{{ mongodb_path }}'
+  shell: "mv {{ mongodb_path }}-linux-x86_64-{{ mongodb_version }} {{ mongodb_path }}"
+  when: not rt_path.stat.exists
+
+- name: Create mongodb working directory
+  file:
+    path: "{{ mongodb_path }}/{{ item }}"
+    state: directory
+    mode: '0755'
+  loop: "{{ mongodb_directory }}"

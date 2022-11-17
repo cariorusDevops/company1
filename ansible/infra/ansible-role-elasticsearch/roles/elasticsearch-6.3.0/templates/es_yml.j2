@@ -1,0 +1,51 @@
+# elasticsearch {{ es_version }}
+---
+# Node
+node.master: {{ es_node_master }}
+node.data: {{ es_node_data }}
+node.ingest: {{ es_node_ingest }}
+node.name: "{{ ansible_hostname | lower }}"
+
+# Path
+path.data: {{ es_path_data }}
+path.logs: {{ es_path_logs }}
+
+cluster.name: {{ es_config['cluster.name'] | default("logging-prod") }}
+
+# Network
+network.host: {{ es_network_host }}
+network.tcp.no_delay: {{ es_tcp_no_delay }}
+network.tcp.keep_alive: {{ es_tcp_keep_alive }}
+network.tcp.reuse_address: {{ es_tcp_reuse_address }}
+
+discovery.zen.ping.unicast.hosts: [{% for es_hostname in groups[thegroups] %}"{{ hostvars[es_hostname]['ansible_hostname'] }}"{% if not loop.last %}, {% endif %}{% endfor %}]
+
+# Transport
+transport.tcp.port: {{ es_transport_tcp_port }}
+transport.tcp.connect_timeout: {{ es_transport_tcp_connect_timeout }}
+transport.tcp.compress: {{ es_transport_tcp_compress }}
+transport.ping_schedule: {{ es_transport_ping_schedule }}
+
+# HTTP
+http.enabled: {{ es_http_enabled }}
+
+http.port: {{ es_http_port }}
+
+http.max_content_length: {{ es_http_max_content_length }}
+http.max_initial_line_length: {{ es_http_max_initial_line_length }}
+http.max_header_size: {{ es_http_max_header_size }}
+
+http.compression: {{ es_http_compression }}
+http.compression_level: {{ es_http_compression_level }}
+
+http.cors.enabled: {{ es_http_cors_enabled }}
+http.cors.max-age: {{ es_http_cors_max_age }}
+#http.cors.allow-origin: "{{ es_http_cors_allow_origin }}"
+http.cors.allow-methods: {{ es_http_cors_allow_methods }}
+http.cors.allow-headers: {{ es_http_cors_allow_headers }}
+http.cors.allow-credentials: {{ es_http_cors_allow_credentials }}
+
+http.detailed_errors.enabled: {{ es_http_detailed_errors_enabled }}
+
+http.pipelining: {{ es_http_pipelining }}
+http.pipelining.max_events: {{ es_http_pipelining_max_events }}

@@ -1,0 +1,20 @@
+[
+  {
+    "name": "prod-service-01",
+    "type": "i3en.3xlarge",
+    "cpu_count": 6,
+    "cpu_threads_per_core": 2,
+    "size": 100,
+    "ip_v4": "10.9.24.31",
+    "ami_name": "terraform-u2-service-01"
+  },
+  {
+    "name": "prod-service-02",
+    "type": "i3en.3xlarge",
+    "cpu_count": 6,
+    "cpu_threads_per_core": 2,
+    "size": 100,
+    "ip_v4": "10.9.24.32",
+    "ami_name": "terraform-u2-service-02"
+  }
+]

@@ -1,0 +1,520 @@
+[
+  {
+    "name": "uat2-ansible-northeast3",
+    "type": "e2-small",
+    "size": 30,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.10"
+    },
+    "snapshot": {
+      "name": "uat2-ansible",
+      "disk": "prod-ansible"
+    }
+  },
+  {
+    "name": "uat2-employee-jump-northeast3",
+    "type": "e2-small",
+    "size": 100,
+    "network": {
+      "vpc": "u2-dmz-vpc-202207",
+      "subnetwork": "u2-dmz122-vpc-202207",
+      "address": "10.8.122.101"
+    },
+    "snapshot": {
+      "name": "uat2-employee-jump",
+      "disk": "prod-employee-jump01"
+    }
+  },
+  {
+    "name": "uat2-rd-jump-northeast3",
+    "type": "e2-small",
+    "size": 20,
+    "network": {
+      "vpc": "u2-dmz-vpc-202207",
+      "subnetwork": "u2-dmz122-vpc-202207",
+      "address": "10.8.122.102"
+    },
+    "snapshot": {
+      "name": "uat2-rd-jump",
+      "disk": "prod-rd-jump01"
+    }
+  },
+  {
+    "name": "uat2-nginx-forehead-01-northeast3",
+    "type": "e2-small",
+    "size": 100,
+    "network": {
+      "vpc": "u2-dmz-vpc-202207",
+      "subnetwork": "u2-dmz122-vpc-202207",
+      "address": "10.8.122.11"
+    },
+    "snapshot": {
+      "name": "uat2-nginx-forehead-01",
+      "disk": "a-prod-nginx-forehead-01"
+    }
+  },
+  {
+    "name": "uat2-nginx-forehead-02-northeast3",
+    "type": "e2-small",
+    "size": 100,
+    "network": {
+      "vpc": "u2-dmz-vpc-202207",
+      "subnetwork": "u2-dmz122-vpc-202207",
+      "address": "10.8.122.12"
+    },
+    "snapshot": {
+      "name": "uat2-nginx-forehead-02",
+      "disk": "a-prod-nginx-forehead-02"
+    }
+  },
+  {
+    "name": "uat2-nginx-backend-01-northeast3",
+    "type": "e2-small",
+    "size": 100,
+    "network": {
+      "vpc": "u2-dmz-vpc-202207",
+      "subnetwork": "u2-dmz122-vpc-202207",
+      "address": "10.8.122.13"
+    },
+    "snapshot": {
+      "name": "uat2-nginx-backend-01",
+      "disk": "a-prod-nginx-backend-01"
+    }
+  },
+  {
+    "name": "uat2-nginx-pay-northeast3",
+    "type": "e2-small",
+    "size": 100,
+    "network": {
+      "vpc": "u2-dmz-vpc-202207",
+      "subnetwork": "u2-dmz122-vpc-202207",
+      "address": "10.8.122.14"
+    },
+    "snapshot": {
+      "name": "uat2-nginx-pay",
+      "disk": "a-prod-nginx-pay"
+    }
+  },
+  {
+    "name": "uat2-job-01-northeast3",
+    "type": "e2-standard-2",
+    "size": 100,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.21"
+    },
+    "snapshot": {
+      "name": "uat2-job-01",
+      "disk": "b-prod--job-1"
+    }
+  },
+  {
+    "name": "uat2-service-01-northeast3",
+    "type": "custom-6-49152-ext",
+    "size": 100,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.31"
+    },
+    "snapshot": {
+      "name": "uat2-service-01",
+      "disk": "c-prod-service-1"
+    }
+  },
+  {
+    "name": "uat2-service-02-northeast3",
+    "type": "custom-6-49152-ext",
+    "size": 100,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.32"
+    },
+    "snapshot": {
+      "name": "uat2-service-02",
+      "disk": "c-prod-service-2"
+    }
+  },
+  {
+    "name": "uat2-gateway-01-northeast3",
+    "type": "e2-standard-2",
+    "size": 100,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.41"
+    },
+    "snapshot": {
+      "name": "uat2-gateway-01",
+      "disk": "d-prod-gateway-1"
+    }
+  },
+  {
+    "name": "uat2-gateway-02-northeast3",
+    "type": "e2-standard-2",
+    "size": 100,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.42"
+    },
+    "snapshot": {
+      "name": "uat2-gateway-02",
+      "disk": "d-prod-gateway-2"
+    }
+  },
+  {
+    "name": "uat2-zookeeper-01-northeast3",
+    "type": "e2-small",
+    "size": 100,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.51"
+    },
+    "snapshot": {
+      "name": "uat2-zookeeper-01",
+      "disk": "f-prod-zookeeper-1"
+    }
+  },
+  {
+    "name": "uat2-zookeeper-02-northeast3",
+    "type": "e2-small",
+    "size": 100,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.52"
+    },
+    "snapshot": {
+      "name": "uat2-zookeeper-02",
+      "disk": "f-prod-zookeeper-2"
+    }
+  },
+  {
+    "name": "uat2-zookeeper-03-northeast3",
+    "type": "e2-small",
+    "size": 100,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.53"
+    },
+    "snapshot": {
+      "name": "uat2-zookeeper-03",
+      "disk": "f-prod-zookeeper-3"
+    }
+  },
+  {
+    "name": "uat2-monitor-01-northeast3",
+    "type": "e2-small",
+    "size": 100,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.61"
+    },
+    "snapshot": {
+      "name": "uat2-monitor-01",
+      "disk": "g-prod-monitor-1"
+    }
+  },
+  {
+    "name": "uat2-monitor-02-northeast3",
+    "type": "e2-small",
+    "size": 100,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.62"
+    },
+    "snapshot": {
+      "name": "uat2-monitor-02",
+      "disk": "g-prod-monitor-2"
+    }
+  },
+  {
+    "name": "uat2-logstash-01-northeast3",
+    "type": "e2-small",
+    "size": 100,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.71"
+    },
+    "snapshot": {
+      "name": "uat2-logstash-01",
+      "disk": "h-prod-logstash-1"
+    }
+  },
+  {
+    "name": "uat2-kibana-01-northeast3",
+    "type": "e2-small",
+    "size": 100,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.81"
+    },
+    "snapshot": {
+      "name": "uat2-logstash-01",
+      "disk": "i-prod-kibana-1"
+    }
+  },
+  {
+    "name": "uat2-mongodb-01-northeast3",
+    "type": "e2-small",
+    "size": 30,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.101"
+    },
+    "snapshot": {
+      "name": "uat2-mongodb-01",
+      "disk": "prod-template2"
+    }
+  },
+  {
+    "name": "uat2-mongodb-02-northeast3",
+    "type": "e2-small",
+    "size": 30,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.102"
+    },
+    "snapshot": {
+      "name": "uat2-mongodb-02",
+      "disk": "prod-template2"
+    }
+  },
+  {
+    "name": "uat2-mongodb-03-northeast3",
+    "type": "e2-small",
+    "size": 30,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.103"
+    },
+    "snapshot": {
+      "name": "uat2-mongodb-03",
+      "disk": "prod-template2"
+    }
+  },
+  {
+    "name": "uat2-redis-01-northeast3",
+    "type": "e2-small",
+    "size": 20,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.111"
+    },
+    "snapshot": {
+      "name": "uat2-redis-01",
+      "disk": "prod-template3"
+    }
+  },
+  {
+    "name": "uat2-redis-02-northeast3",
+    "type": "e2-small",
+    "size": 20,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.112"
+    },
+    "snapshot": {
+      "name": "uat2-redis-02",
+      "disk": "prod-template3"
+    }
+  },
+  {
+    "name": "uat2-redis-03-northeast3",
+    "type": "e2-small",
+    "size": 20,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.113"
+    },
+    "snapshot": {
+      "name": "uat2-redis-03",
+      "disk": "prod-template3"
+    }
+  },
+  {
+    "name": "uat2-redis-04-northeast3",
+    "type": "e2-small",
+    "size": 20,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.114"
+    },
+    "snapshot": {
+      "name": "uat2-redis-04",
+      "disk": "prod-template4"
+    }
+  },
+  {
+    "name": "uat2-redis-05-northeast3",
+    "type": "e2-small",
+    "size": 20,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.115"
+    },
+    "snapshot": {
+      "name": "uat2-redis-05",
+      "disk": "prod-template4"
+    }
+  },
+  {
+    "name": "uat2-redis-06-northeast3",
+    "type": "e2-small",
+    "size": 20,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.116"
+    },
+    "snapshot": {
+      "name": "uat2-redis-06",
+      "disk": "prod-template4"
+    }
+  },
+  {
+    "name": "uat2-rabbitmq-01-northeast3",
+    "type": "e2-small",
+    "size": 20,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.121"
+    },
+    "snapshot": {
+      "name": "uat2-rabbitmq-01",
+      "disk": "prod-template5"
+    }
+  },
+  {
+    "name": "uat2-rabbitmq-02-northeast3",
+    "type": "e2-small",
+    "size": 20,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.122"
+    },
+    "snapshot": {
+      "name": "uat2-rabbitmq-02",
+      "disk": "prod-template5"
+    }
+  },
+  {
+    "name": "uat2-rabbitmq-03-northeast3",
+    "type": "e2-small",
+    "size": 20,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.123"
+    },
+    "snapshot": {
+      "name": "uat2-rabbitmq-03",
+      "disk": "prod-template5"
+    }
+  },
+  {
+    "name": "uat2-elasticsearch-01-northeast3",
+    "type": "e2-medium",
+    "size": 30,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.131"
+    },
+    "snapshot": {
+      "name": "uat2-elasticsearch-01",
+      "disk": "prod-template6"
+    }
+  },
+  {
+    "name": "uat2-elasticsearch-02-northeast3",
+    "type": "e2-medium",
+    "size": 30,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.132"
+    },
+    "snapshot": {
+      "name": "uat2-elasticsearch-02",
+      "disk": "prod-template6"
+    }
+  },
+  {
+    "name": "uat2-elasticsearch-03-northeast3",
+    "type": "e2-medium",
+    "size": 30,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.133"
+    },
+    "snapshot": {
+      "name": "uat2-elasticsearch-03",
+      "disk": "prod-template6"
+    }
+  },
+  {
+    "name": "uat2-elasticsearch-log-01-northeast3",
+    "type": "e2-medium",
+    "size": 30,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.137"
+    },
+    "snapshot": {
+      "name": "uat2-elasticsearch-log-01",
+      "disk": "prod-template7"
+    }
+  },
+  {
+    "name": "uat2-elasticsearch-log-02-northeast3",
+    "type": "e2-medium",
+    "size": 30,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.138"
+    },
+    "snapshot": {
+      "name": "uat2-elasticsearch-log-02",
+      "disk": "prod-template7"
+    }
+  },
+  {
+    "name": "uat2-elasticsearch-log-03-northeast3",
+    "type": "e2-medium",
+    "size": 30,
+    "network": {
+      "vpc": "u2-interior-vpc-202207",
+      "subnetwork": "u2-int124-net-202207",
+      "address": "10.8.124.139"
+    },
+    "snapshot": {
+      "name": "uat2-elasticsearch-log-03",
+      "disk": "prod-template7"
+    }
+  }
+]

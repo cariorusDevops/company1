@@ -1,0 +1,12 @@
+[Unit]
+Description=Redis Server {{ redis_version }}
+After=network.target
+
+[Service]
+ExecStart={{ redis_path }}/src/redis-server {{ redis_path }}/redis.conf
+ExecStop={{ redis_path }}/src/redis-cli shutdown
+Type=notify
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

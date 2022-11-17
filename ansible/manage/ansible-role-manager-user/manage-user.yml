@@ -1,0 +1,20 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    # the variable for service_user.yml
+    append_groups:
+      enabled: true
+      groups: google-sudoers
+    jump_inventory_hostname: employee_jump
+  tasks:
+  - include_role:
+      name: manage-user
+    loop:
+      - { target: se, exists: true, name: chen }
+      - { target: se, exists: true, name: nivek }
+      - { target: se, exists: true, name: blitzlee }
+      - { target: se, exists: true, name: gbselogin } # spike
+      - { target: se, exists: true, name: se07-m } # milk
+      - { target: db, exists: true, name: joanchen }
+      - { target: fish, exists: true, name: fish }

@@ -1,0 +1,48 @@
+---
+- name: Elasticsearch node hostname add to '/etc/hosts'
+  lineinfile:
+    path: /etc/hosts
+    regexp: "^{{ hostvars[item]['ansible_host'] }}"
+    line: "{{ hostvars[item]['ansible_host'] }} {{ hostvars[item]['ansible_hostname'] }}"
+    state: present
+  loop: "{{ groups[thegroups] }}"
+
+- name: Check '{{ es_path }}-{{ es_version }}.tar.gz' exists
+  stat:
+    path: "{{ es_path }}-{{ es_version }}.tar.gz"
+  register: rt_tar
+  
+- name: Copy '{{ es_path }}-{{ es_version }}.tar.gz'
+  copy: 
+    src: "elasticsearch-{{ es_version }}.tar.gz"
+    dest: "{{ es_install_dir }}"
+  when: not rt_tar.stat.exists
+
+- name: Check '{{ es_path }}' exists
+  stat:
+    path: "{{ es_path }}"
+  register: rt_path
+
+- name: Extract '{{ es_path }}-{{ es_version }}' tarball
+  unarchive:
+    src: "{{ es_path }}-{{ es_version }}.tar.gz"
+    dest: "{{ es_install_dir }}"
+    owner: "{{ es_system_user }}"
+    group: "{{ es_system_group }}"
+    remote_src: yes
+  when: not rt_path.stat.exists
+
+- name: Rename '{{ es_path }}-{{ es_version }}' become '{{ es_path }}'
+  shell: "mv {{ es_path }}-{{ es_version }} {{ es_path }}"
+  when: not rt_path.stat.exists
+
+- name: Create elasticsearch working directory 
+  file:
+    path: "{{ es_path }}/{{ item }}"
+    owner: "{{ es_system_user }}"
+    group: "{{ es_system_group }}" 
+    state: directory
+    mode: '0755'
+  loop: "{{ es_directory }}"
+
+  

@@ -1,0 +1,15 @@
+# rabbitmq {{ rabbitmq_version }}
+
+# Example rabbitmq-env.conf file entries. Note that the variables
+# do not have the RABBITMQ_ prefix.
+#
+# Overrides node name
+NODENAME={{ rabbitmq_env_nodename }}
+
+NODE_IP_ADDRESS={{ rabbitmq_env_ip }}
+NODE_PORT={{ rabbitmq_env_port }}
+
+#HOME={{ rabbitmq_path }}
+PID_FILE={{ rabbitmq_path }}/pid/rabbitmq.pid
+LOG_BASE={{ rabbitmq_path }}/logs
+PLUGINS_DIR={{ rabbitmq_path }}/plugins

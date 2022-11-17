@@ -1,0 +1,8 @@
+---
+- name: create-user.yml
+  include_tasks: create-user.yml
+  when: item.exists == true
+
+- name: remove-user.yml
+  include_tasks: remove-user.yml
+  when: item.exists == false

@@ -1,0 +1,30 @@
+[
+  {
+    "name": "terraform-uat-rd-jump",
+    "type": "e2-small",
+    "size": 30,
+    "network": {
+      "vpc": "uat-vpc",
+      "subnetwork": "uat-vpc",
+      "address": "172.20.1.14"
+    },
+    "snapshot": {
+      "name": "terraform-prod-ansible",
+      "disk": "prod-ansible"
+    }
+  },
+  {
+    "name": "terraform-uat-rd-jump2",
+    "type": "e2-small",
+    "size": 30,
+    "network": {
+      "vpc": "uat-vpc",
+      "subnetwork": "uat-vpc",
+      "address": "172.20.1.15"
+    },
+    "snapshot": {
+      "name": "terraform-prod-ansible2",
+      "disk": "prod-ansible"
+    }
+  }
+]

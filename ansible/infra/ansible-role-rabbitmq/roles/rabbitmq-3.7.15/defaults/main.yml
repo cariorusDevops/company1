@@ -1,0 +1,25 @@
+---
+# erlang (otp)
+erlang_path: /opt/erlang
+erlang_cookie_store_path: /root/ansible/roles
+
+# rabbitmq
+rabbitmq_path: /opt/rabbitmq
+
+rabbitmq_directory:
+  - pid
+  - logs
+
+rabbitmq_cluster:
+  - stop_app
+  - reset
+  - "join_cluster rabbitmq@{{ hostvars[rabbitmq_firstnode]['ansible_hostname'] }}"
+  - start_app
+
+rabbitmq_plugin:
+  - rabbitmq_management
+
+# rabbitmq env (config)
+rabbitmq_env_nodename: rabbitmq
+rabbitmq_env_ip: 0.0.0.0
+rabbitmq_env_port: 5672

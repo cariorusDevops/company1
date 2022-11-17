@@ -1,0 +1,16 @@
+---
+# otp (erlang)
+otp_install_dir: /opt
+otp_version: 22.0
+
+# rabbitmq
+rabbitmq_install_dir: /opt
+rabbitmq_version: 3.7.15
+rabbitmq_daemon: rabbitmq
+rabbitmq_systemd: /etc/systemd/system/{{ rabbitmq_daemon }}.service
+
+# environment
+erlang_bin: "ERLANG_BIN={{ erlang_path }}/bin"
+rabbitmq_bin: "RABBITMQ_BIN={{ rabbitmq_path }}/sbin"
+
+all_bin: $ERLANG_BIN:$RABBITMQ_BIN

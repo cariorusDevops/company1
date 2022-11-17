@@ -1,0 +1,54 @@
+---
+- name: Check group {{ "'{{ item.name }}'" }} exists
+  getent:
+    database: group
+    key: {{ '"{{ item.name }}"' }}
+    fail_key: no
+  register: rt_group
+
+- name: Create group {{ "'{{ item.name }}'" }}
+  group:
+    name: {{ '"{{ item.name }}"' }}
+    state: present
+  when:
+    - {{ 'item.exists == true' }}
+    - {{ 'not rt_group.ansible_facts.getent_group[item.name]' }}
+
+- name: Check user {{ "'{{ item.name }}'" }} exists
+  getent:
+    database: passwd
+    key: {{ '"{{ item.name }}"' }}
+    fail_key: no
+  register: rt_user
+
+- name: Create user {{ "'{{ item.name }}'" }}
+  user:
+    append: yes
+    create_home: yes
+    name: {{ '"{{ item.name }}"' }}
+    group: {{ '"{{ item.name }}"' }} 
+    {% if append_groups['enabled'] -%}
+    groups: {{ append_groups['groups'] }}
+    {% endif -%}
+    generate_ssh_key: yes
+    state: present
+  when:
+    - {{ 'item.exists == true' }}
+    - {{ 'not rt_user.ansible_facts.getent_passwd[item.name]' }}
+
+- name: Set {{ "'{{ item.name }}'" }} authorized key
+  authorized_key:
+    user: {{ '"{{ item.name }}"' }}
+    state: present
+    key: {{ '"{{' }} {{ "lookup('file', '{{ notebook_key_path }}/{{ item.name }}.key')" }} {{ '}}"' }} 
+  when:
+    - {{ 'item.exists == true' }}
+
+- name: Fetch {{ "'{{ item.name }}'" }} jump public key
+  fetch: 
+    src: {{ '"/home/{{ item.name }}/.ssh/id_rsa.pub"' }}
+    dest: {{ '"{{ jump_key_path }}/{{ item.name }}.key"' }}
+    flat: yes
+  when:
+    - item.name == "rdtest"
+    - item.exists == true

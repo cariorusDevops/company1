@@ -1,0 +1,44 @@
+---
+- name: RabbitMQ node hostname add to '/etc/hosts'
+  lineinfile:
+    path: /etc/hosts
+    regexp: "^{{ hostvars[item]['ansible_host'] }}"
+    line: "{{ hostvars[item]['ansible_host'] }} {{ hostvars[item]['ansible_hostname'] }}"
+    state: present
+  loop: "{{ groups[rabbitmq_allnode] }}"
+
+- name: Check 'rabbitmq-server-generic-unix-{{ rabbitmq_version }}.tar.xz' exists
+  stat:
+    path: "{{ rabbitmq_path }}-server-generic-unix-{{ rabbitmq_version }}.tar.xz"
+  register: rt_tar
+
+- name: Copy 'rabbitmq-server-generic-unix-{{ rabbitmq_version }}.tar.xz'
+  copy:
+    src: "rabbitmq-server-generic-unix-{{ rabbitmq_version }}.tar.xz"
+    dest: "{{ rabbitmq_install_dir }}"
+  when: not rt_tar.stat.exists
+
+- name: Check '{{ rabbitmq_path }}' exists
+  stat:
+    path: "{{ rabbitmq_path }}"
+  register: rt_path
+
+- name: Extract 'rabbitmq-server-generic-unix-{{ rabbitmq_version }}.tar.xz' tarball
+  unarchive:
+    src: "{{ rabbitmq_path }}-server-generic-unix-{{ rabbitmq_version }}.tar.xz"
+    dest: "{{ rabbitmq_install_dir }}"
+    remote_src: yes
+  when: not rt_path.stat.exists
+
+- name: Rename '{{ rabbitmq_path }}_server-{{ rabbitmq_version }}' become '{{ rabbitmq_path }}'
+  shell: "mv {{ rabbitmq_path }}_server-{{ rabbitmq_version }} {{ rabbitmq_path }}"
+  when: not rt_path.stat.exists
+
+- name: Create rabbitmq working directory
+  file:
+    path: "{{ rabbitmq_path }}/{{ item }}"
+    owner: root
+    group: root
+    mode: '0755'
+    state: directory
+  loop: "{{ rabbitmq_directory }}"

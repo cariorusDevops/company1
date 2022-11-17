@@ -1,0 +1,29 @@
+---
+- name: Check 'jdk{{ java_version }}.tar' exists
+  stat:
+    path: "{{ java_install_dir }}/jdk{{ java_version }}.tar"
+  register: rt_tar
+
+- name: Copy 'jdk{{ java_version }}.tar'
+  copy: 
+    src: jdk{{ java_version }}.tar
+    dest: "{{ java_install_dir }}"
+  when: not rt_tar.stat.exists
+
+- name: Extract 'jdk{{ java_version }}.tar' tarball
+  unarchive:
+    src: "{{ java_install_dir }}/jdk{{ java_version }}.tar"
+    dest: "{{ java_install_dir }}"
+    owner: root
+    group: root
+    remote_src: yes
+  when: not rt_tar.stat.exists
+
+- name: Add java bin to '/etc/bashrc'
+  lineinfile:
+    path: /etc/bashrc
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - { regexp: '^{{ java_prefix }}', line: '{{ java_home }}'}
+    - { regexp: '^export PATH=', line: '{{ java_export }}'}

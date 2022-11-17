@@ -1,0 +1,77 @@
+---
+- name: Add mongodb-cli add to '/etc/bashrc'
+  lineinfile:
+    path: /etc/bashrc
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - { regexp: '^MONGODB_BIN', line: '{{ mongodb_bin }}'}
+    - { regexp: '^export PATH=$PATH:', line: '{{ mongodb_export }}'}
+
+- name: Setup init mongodb.conf
+  template:
+    src: mongodb_init.conf.j2
+    dest: "{{ mongodb_path }}/mongod.conf"
+    mode: '0644'
+
+- name: Setup mongodb systemd
+  template:
+    src: mongodb_systemd.j2
+    dest: "{{ mongodb_systemd }}"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Enable service on boot & Start mongodb
+  service:
+    enabled: yes
+    name: "{{ mongodb_daemon }}"
+    state: started
+
+- name: Add administrator user
+  no_log: true
+  mongodb_user:
+    database: admin
+    name: "{{ mongodb_user }}"
+    password: "{{ mongodb_password }}"
+    roles: "{{ mongodb_roles }}"
+    state: present
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+- name: Add rd user
+  no_log: true
+  mongodb_user:
+    login_database: admin
+    login_user: "{{ mongodb_user }}"
+    login_password: "{{ mongodb_password }}"
+    database: "{{ mongodb_rd_database }}"
+    name: "{{ mongodb_rd_user }}"
+    password: "{{ mongodb_rd_password }}"
+    roles: "{{ mongodb_rd_roles }}"
+    state: present
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+- name: Generate mongodb security key in ansible vm '{{ role_path }}/files/security_key'
+  local_action: command openssl rand -out {{ role_path }}/files/security_key -base64 756
+  run_once: true 
+
+- name: Copy mongodb security key
+  copy:
+    src: security_key
+    dest: "{{ mongodb_key }}"
+
+- name: Change security key permission
+  file:
+    path: "{{ mongodb_key }}"
+    owner: "{{ mongodb_system_user }}"
+    group: "{{ mongodb_system_group }}"
+    mode: '0400'
+
+- name: Setup formal mongodb.conf
+  template:
+    src: mongodb_formal.conf.j2
+    dest: "{{ mongodb_path }}/mongod.conf"
+    mode: '0644'
+  notify: "Restart mongodb"

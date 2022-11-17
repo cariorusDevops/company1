@@ -1,0 +1,9 @@
+/opt/rabbitmq/logs/rabbitmq.log {
+    daily
+    missingok
+    rotate 8
+    compress
+    dateext
+    notifempty
+    copytruncate 
+}

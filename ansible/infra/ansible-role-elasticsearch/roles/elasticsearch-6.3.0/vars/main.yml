@@ -1,0 +1,10 @@
+---
+es_install_dir: /opt
+
+es_version: 6.3.0
+es_daemon: elasticsearch
+es_systemd: "/etc/systemd/system/{{ es_daemon }}.service"
+es_sysconfig: "/etc/sysconfig/{{ es_daemon }}"
+es_jvm: "{{ es_path }}/config/jvm.options"
+
+es_java_path: "/opt/jdk1.8.0_161"

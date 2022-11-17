@@ -1,0 +1,29 @@
+# mongodb 2.6.9
+
+systemLog:
+  traceAllExceptions: true
+  destination: file
+  path: /opt/mongodb/log/mongod.log
+  logAppend: true
+  timeStampFormat: iso8601-local
+
+storage:
+  journal:
+    enabled: true
+
+processManagement:
+  fork: true
+  pidFilePath: /opt/mongodb/pid/mongod.pid
+
+net:
+  port: 27017
+  bindIp: 0.0.0.0
+  maxIncomingConnections: 1000000
+
+security:
+  keyFile: /opt/mongodb/key/mongodb-key
+  clusterAuthMode: keyFile
+  authorization: enabled
+
+replication:
+  replSetName: rs0

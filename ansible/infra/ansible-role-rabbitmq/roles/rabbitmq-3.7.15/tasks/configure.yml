@@ -1,0 +1,74 @@
+---
+- name: Add erlang/rabbitmq bin to '/etc/bashrc'
+  lineinfile:
+    path: /etc/bashrc
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - { regexp: '^ERLANG_BIN=', line: '{{ erlang_bin }}'}
+    - { regexp: '^RABBITMQ_BIN=', line: '{{ rabbitmq_bin }}'}
+    - { regexp: '^export PATH=', line: 'export PATH=$PATH:{{ all_bin }}'}
+
+- name: Add erlang 'erl' in '/usr/bin' directory
+  file:
+    src: "{{ erlang_path }}/bin/erl"
+    dest: /usr/bin/erl
+    owner: root
+    group: root
+    state: link
+
+- name: Setup rabbitmq-env.conf
+  template:
+    src: rabbitmq_env.conf.j2
+    dest: "{{ rabbitmq_path }}/etc/rabbitmq/rabbitmq-env.conf"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Setup rabbitmq systemd
+  template:
+    src: rabbitmq_systemd.j2
+    dest: "{{ rabbitmq_systemd }}"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Enables plugin
+  shell: "{{ rabbitmq_path }}/sbin/rabbitmq-plugins enable {{ item }}"
+  loop: "{{ rabbitmq_plugin }}"
+
+- name: Fetch '{{ rabbitmq_firstnode }} node' .erlang.cookie
+  fetch:
+    src: /root/.erlang.cookie
+    dest: "{{ role_path }}/files/.erlang.cookie"
+    flat: yes
+  when: inventory_hostname == rabbitmq_firstnode
+
+- name: Copy '.erlang.cookie' to other node
+  copy:
+    src: '.erlang.cookie'
+    dest: /root/.erlang.cookie
+    owner: root
+    group: root
+    mode: '0400'
+  when: inventory_hostname != rabbitmq_firstnode
+
+- name: Enable service on Boot & Start rabbitmq
+  service:
+    enabled: yes
+    name: "{{ rabbitmq_daemon }}"
+    state: started
+
+- name: Make rabbitmq cluster
+  shell: "{{ rabbitmq_path }}/sbin/rabbitmqctl {{ item }}" 
+  loop: "{{ rabbitmq_cluster }}"
+  when: inventory_hostname != rabbitmq_firstnode
+
+- name: Add web management user
+  shell: "{{ rabbitmq_path }}/sbin/rabbitmqctl {{ item }}"
+  ignore_errors: yes
+  loop:
+    - "add_user global global!"
+    - "set_permissions -p / global . . ."
+    - "set_user_tags global administrator"
+  when: inventory_hostname == rabbitmq_firstnode

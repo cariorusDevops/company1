@@ -1,0 +1,6 @@
+---
+redis_install_dir: /opt
+
+redis_version: 5.0.14
+redis_daemon: redis
+redis_systemd: "/etc/systemd/system/{{ redis_daemon }}.service"

@@ -1,0 +1,29 @@
+# mongodb {{ mongodb_version }}
+
+systemLog:
+  traceAllExceptions: {{ mongodb_traceallexceptions }}
+  destination: {{ mongodb_destination }}
+  path: {{ mongodb_log }}
+  logAppend: {{ mongodb_logappend }}
+  timeStampFormat: {{ mongodb_timestampformat }}
+
+storage:
+  journal:
+    enabled: {{ mongodb_journal }}
+
+processManagement:
+  fork: {{ mongodb_fork }}
+  pidFilePath: {{ mongodb_pid }}
+
+net:
+  port: {{ mongodb_port }}
+  bindIp: {{ mongodb_bind }}
+  maxIncomingConnections: {{ mongodb_maxconntion }}
+
+security:
+  keyFile: {{ mongodb_key }}
+  clusterAuthMode: {{ mongodb_clusterauthmode }}
+  authorization: {{ mongodb_authorization }}
+
+replication:
+  replSetName: {{ mongodb_replisetname }}

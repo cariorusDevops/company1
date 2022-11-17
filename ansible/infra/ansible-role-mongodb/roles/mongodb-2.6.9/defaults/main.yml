@@ -1,0 +1,48 @@
+---
+mongodb_path: /opt/mongodb
+
+mongodb_directory:
+  - key
+  - log
+  - pid
+  - data
+
+## mongod.conf 
+
+# systemlog
+mongodb_traceallexceptions: "true"
+mongodb_destination: file
+mongodb_log: "{{ mongodb_path }}/log/mongod.log"
+mongodb_logappend: "true"
+mongodb_timestampformat: iso8601-local
+
+# storage
+mongodb_journal: "true"
+
+# processManagement
+mongodb_fork: "true"
+mongodb_pid: "{{ mongodb_path }}/pid/mongod.pid"
+
+# network
+mongodb_port: 27017
+mongodb_bind: 0.0.0.0
+mongodb_maxconntion: 1000000
+mongodb_http: "true"
+
+# security
+mongodb_key: "{{ mongodb_path }}/key/mongodb-key"
+mongodb_clusterauthmode: keyFile
+mongodb_authorization: enabled
+
+# replication
+mongodb_replisetname: rs0
+
+# mongodb administrator user
+mongodb_user: admin
+mongodb_password: NqUCHrKC5NMy2Dgd
+mongodb_roles: root
+
+# mongodb system user
+mongodb_system_home: "{{ mongodb_path }}"
+mongodb_system_user: mongod
+mongodb_system_group: mongod

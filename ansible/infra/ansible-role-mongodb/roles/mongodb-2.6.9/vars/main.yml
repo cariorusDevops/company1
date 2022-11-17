@@ -1,0 +1,19 @@
+---
+mongodb_install_dir: /opt
+
+mongodb_version: 2.6.9
+mongodb_daemon: mongod
+mongodb_systemd: "/etc/systemd/system/{{ mongodb_daemon }}.service"
+mongodb_sysconfig: "/etc/sysconfig/{{ mongodb_daemon }}"
+
+mongodb_data: "{{ mongodb_path }}/data"
+
+# mongodb bin
+mongodb_bin: "MONGODB_BIN={{ mongodb_path }}/bin"
+mongodb_export: "export PATH=$PATH:$MONGODB_BIN"
+
+# mongodb rd user
+mongodb_rd_database: global_mongo_db
+mongodb_rd_user: global
+mongodb_rd_password: global!@
+mongodb_rd_roles: readWrite

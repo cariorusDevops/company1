@@ -1,0 +1,30 @@
+pipeline {
+  agent any
+
+  environment {
+    def chat_id = "-752490741"
+    def bot_token = "bot1935079881:AAE6zf-uMrKFXrmBttgoALdpjxFBxCVR_3"
+    def host = "${env.GIT_BRANCH == "origin/main" ? "ops" : "dev"}"
+    def repo = "monitor-ci"
+    def version = "${env.GIT_BRANCH == "origin/main" ? "main" : "dev"}"
+  }
+  
+  stages{
+    stage("Run main.yml") {
+      steps {
+        sshagent(['jenkins-for-ansible']) {
+            sh "ssh -o StrictHostKeyChecking=no -l jenkins 10.10.0.51 sudo ansible-playbook /root/ansible/books/monitor_ci/main.yml -e host=${host} -e repo=${repo} -e version=${version}"
+        }
+      }
+    }
+  }
+  post {  
+    always {
+        sshagent(['jenkins-for-ansible']) {
+          sh """
+            ssh -o StrictHostKeyChecking=no -l jenkins 10.10.0.51  "sudo curl -s -X POST https://api.telegram.org/${bot_token}/sendMessage -d chat_id=${chat_id} -d text='Job：${env.JOB_NAME}\nBranch：${env.GIT_BRANCH}\nBuild_ID：${env.BUILD_ID}\nResults：${currentBuild.result}'"
+          """
+        }
+    }
+  }  
+}

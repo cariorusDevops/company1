@@ -1,0 +1,29 @@
+[Unit]
+Description=RabbitMQ Server {{ rabbitmq_version }}
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+
+WorkingDirectory={{ rabbitmq_path }}
+ExecStart={{ rabbitmq_path }}/sbin/rabbitmq-server
+ExecStop={{ rabbitmq_path }}/sbin/rabbitmqctl shutdown
+
+# To override LimitNOFILE, create the following file:
+#
+# /etc/systemd/system/rabbitmq-server.service.d/limits.conf
+#
+# with the following content:
+#
+# [Service]
+# LimitNOFILE=65536
+
+LimitNOFILE=32768
+
+# See rabbitmq/rabbitmq-server-release#51
+SuccessExitStatus=69
+
+[Install]
+WantedBy=multi-user.target

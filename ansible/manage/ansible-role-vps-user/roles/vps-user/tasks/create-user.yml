@@ -1,0 +1,58 @@
+---
+- name: Check group '{{ item.name }}' exists
+  getent:
+    database: group
+    key: "{{ item.name }}"
+    fail_key: no
+  register: rt_group
+
+- name: Create group '{{ item.name }}'
+  group:
+    name: "{{ item.name }}"
+    state: present
+  when:
+    - not rt_group.ansible_facts.getent_group[item.name]
+
+- name: Check user '{{ item.name }}' exists
+  getent:
+    database: passwd
+    key: "{{ item.name }}"
+    fail_key: no
+  register: rt_user
+
+- name: Create user '{{ item.name }}'
+  user:
+    append: yes
+    create_home: yes
+    name: "{{ item.name }}"
+    group: "{{ item.name }}" 
+    groups: "{{ item.name }}"
+    state: present
+  when:
+    - not rt_user.ansible_facts.getent_passwd[item.name]
+
+- name: Get '{{ item.name }}' public keys from gitlab
+  uri:
+    url: "http://{{ gitlab_ip }}/-/snippets/{{ gitlab_snipptes }}/raw/main/{{ item.name }}.key"
+    return_content: yes
+  register: get_key
+  delegate_to: localhost
+
+- name: Get failure
+  fail:
+    msg: "Check {{ item.name }} key exists in gitlab snippets"
+  when: get_key.failed == true
+
+- name: Set '{{ item.name }}' authorized key from gitlab
+  authorized_key:
+    user: "{{ item.name }}"
+    state: present
+    key: "{{ get_key.content }}"
+
+- name: Add '{{ item.name }}' to sudo in /etc/sudoers.d
+  lineinfile:
+    path: "/etc/sudoers.d/{{ item.name }}"
+    line: "{{ item.name }} ALL=(ALL) NOPASSWD: ALL"
+    create: yes
+    state: present
+    mode: '0440'

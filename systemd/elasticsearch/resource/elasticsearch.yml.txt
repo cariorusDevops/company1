@@ -1,0 +1,51 @@
+# elasticsearch 6.3.0
+---
+# Node
+node.master: true
+node.data: true
+node.ingest: true
+node.name: "elasticsearch01"
+
+# Path
+path.data: /opt/elasticsearch/data
+path.logs: /opt/elasticsearch/logs
+
+cluster.name: static-es
+
+# Network
+network.host: 0.0.0.0
+network.tcp.no_delay: true
+network.tcp.keep_alive: true
+network.tcp.reuse_address: true
+
+discovery.zen.ping.unicast.hosts: ["HostName01", "HostName02", "HostName03"]
+
+# Transport
+transport.tcp.port: 9300
+transport.tcp.connect_timeout: 30s
+transport.tcp.compress: false
+transport.ping_schedule: 5s
+
+# HTTP
+http.enabled: true
+
+http.port: 9200
+
+http.max_content_length: 100mb
+http.max_initial_line_length: 4kb
+http.max_header_size: 8kb
+
+http.compression: true
+http.compression_level: 3
+
+http.cors.enabled: false
+http.cors.max-age: 1728000
+#http.cors.allow-origin: "*"
+http.cors.allow-methods: OPTIONS, HEAD, GET, POST, PUT, DELETE
+http.cors.allow-headers: X-Requested-With, Content-Type, Content-Length
+http.cors.allow-credentials: false
+
+http.detailed_errors.enabled: true
+
+http.pipelining: true
+http.pipelining.max_events: 10000

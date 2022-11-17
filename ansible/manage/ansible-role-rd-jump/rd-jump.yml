@@ -1,0 +1,18 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    append_groups:
+      enabled: true
+      groups: google-sudoers
+    rd_jump_inventory_hostname: development_jump
+  tasks:
+  - include_role:
+      name: rd-jump
+    loop:
+      - { target: rd_jump, exists: true, name: chen }
+      - { target: rd_jump, exists: true, name: nivek }
+      - { target: rd_jump, exists: true, name: blitzlee }
+      - { target: rd_jump, exists: true, name: gbselogin } # spike
+      - { target: rd_jump, exists: true, name: se07-m } # milk
+      - { target: rd_service, exists: true, name: rdtest }

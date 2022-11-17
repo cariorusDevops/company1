@@ -1,0 +1,20 @@
+---
+- name: Check user '{{ item.name }}' exists
+  getent:
+    database: passwd
+    key: "{{ item.name }}"
+    fail_key: no
+  register: rt_user
+
+- name: Remove user '{{ item.name }}'
+  user:
+    name: "{{ item.name }}"
+    state: absent
+    remove: yes
+  when:
+    - rt_user.ansible_facts.getent_passwd[item.name]
+
+- name: Remove '{{ item.name }}' file from /etc/sudoers.d
+  file:
+    path: "/etc/sudoers.d/{{ item.name }}"
+    state: absent

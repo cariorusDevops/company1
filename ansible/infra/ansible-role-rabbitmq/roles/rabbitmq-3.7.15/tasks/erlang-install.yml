@@ -1,0 +1,50 @@
+---
+- name: Install Dependencies
+  yum:
+    name:
+      - epel-release
+      - gcc
+      - perl
+      - make
+      - ncurses-devel
+      - openssl
+      - openssl-devel
+      - unixODBC 
+      - unixODBC-devel
+      - mesa*
+    state: present
+
+- name: Check 'otp_src_{{ otp_version }}.tar.gz' exists
+  stat:
+    path: "{{ otp_install_dir }}/otp_src_{{ otp_version }}.tar.gz"
+  register: rt_tar
+
+- name: Copy 'otp_src_{{ otp_version }}.tar.gz'
+  copy:
+    src: "otp_src_{{ otp_version }}.tar.gz"
+    dest: "{{ otp_install_dir }}"
+  when: not rt_tar.stat.exists
+
+- name: Check '{{ otp_install_dir }}/otp_src_{{ otp_version }}' exists
+  stat:
+    path: "{{ otp_install_dir }}/otp_src_{{ otp_version }}"
+  register: rt_path
+
+- name: Extract 'otp_src_{{ otp_version }}' tarball
+  unarchive:
+    src: "{{ otp_install_dir }}/otp_src_{{ otp_version }}.tar.gz"
+    dest: "{{ otp_install_dir }}"
+    owner: root
+    group: root
+    remote_src: yes
+  when: not rt_path.stat.exists
+
+- name: Complie ...
+  shell: "{{ item }}" 
+  args:
+    chdir: "{{ otp_install_dir }}/otp_src_{{ otp_version }}"
+  loop: 
+    - "./configure --prefix={{ erlang_path }}"
+    - make
+    - make install
+  ignore_errors: yes

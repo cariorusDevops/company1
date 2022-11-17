@@ -1,0 +1,13 @@
+# Example rabbitmq-env.conf file entries. Note that the variables
+# do not have the RABBITMQ_ prefix.
+#
+# Overrides node name
+NODENAME=rabbitmq
+
+NODE_IP_ADDRESS=0.0.0.0
+NODE_PORT=5672
+
+#HOME=/opt/rabbitmq
+PID_FILE=/opt/rabbitmq/pid/rabbitmq.pid
+LOG_BASE=/opt/rabbitmq/logs
+PLUGINS_DIR=/opt/rabbitmq/plugins

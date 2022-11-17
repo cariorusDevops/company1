@@ -1,0 +1,58 @@
+---
+es_path: /opt/elasticsearch
+
+es_directory:
+  - pid
+  - data
+
+# system uesr
+es_system_home: "{{ es_path }}"
+es_system_user: elasticsearch
+es_system_group: elasticsearch
+
+## elasticsearch.yml
+
+# node
+es_node_master: "true"
+es_node_data: "true"
+es_node_ingest: "true"
+
+# path
+es_path_data: "{{ es_path }}/data"
+es_path_logs: "{{ es_path }}/logs"
+
+# network
+es_network_host: 0.0.0.0
+es_tcp_no_delay: "true"
+es_tcp_keep_alive: "true"
+es_tcp_reuse_address: "true"
+
+# transport
+es_transport_tcp_port: 9300
+es_transport_tcp_connect_timeout: 30s
+es_transport_tcp_compress: "false"
+es_transport_ping_schedule: 5s
+
+# http
+es_http_enabled: "true"
+
+es_http_port: 9200
+
+es_http_max_content_length: 100mb
+es_http_max_initial_line_length: 4kb
+es_http_max_header_size: 8kb
+
+es_http_compression: "true"
+es_http_compression_level: 3
+
+es_http_cors_enabled: "false"
+es_http_cors_max_age: 1728000
+es_http_cors_allow_origin: "*"
+es_http_cors_allow_methods: OPTIONS, HEAD, GET, POST, PUT, DELETE
+es_http_cors_allow_headers: X-Requested-With, Content-Type, Content-Length
+es_http_cors_allow_credentials: "false"
+
+es_http_detailed_errors_enabled: "true"
+
+es_http_pipelining: "true"
+es_http_pipelining_max_events: 10000

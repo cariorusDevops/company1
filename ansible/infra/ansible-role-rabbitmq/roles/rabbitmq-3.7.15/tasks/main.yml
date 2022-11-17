@@ -1,0 +1,7 @@
+---
+
+- include_tasks: erlang-install.yml
+
+- include_tasks: rabbitmq-install.yml
+
+- include_tasks: configure.yml

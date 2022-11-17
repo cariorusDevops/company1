@@ -1,0 +1,32 @@
+---
+- name: Setup elasticsearch.yml
+  template:
+    src: es_yml.j2
+    dest: "{{ es_path }}/config/elasticsearch.yml"
+    owner: "{{ es_system_user }}"
+    group: "{{ es_system_group }}"
+    mode: '0660'
+
+- name: Setup systemd
+  template:
+    src: es_systemd.j2
+    dest: "{{ es_systemd }}"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Setup sysconfig
+  template:
+    src: es_sysconfig.j2
+    dest: "{{ es_sysconfig }}"
+    owner: root
+    group: root
+    mode: '0660'
+
+- name: Setup jvm_options
+  template:
+    src: es_jvm.j2
+    dest: "{{ es_jvm }}"
+    owner: "{{ es_system_user }}"
+    group: "{{ es_system_group }}"
+    mode: '0660'

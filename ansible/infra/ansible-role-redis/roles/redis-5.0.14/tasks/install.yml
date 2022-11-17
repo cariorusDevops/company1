@@ -1,0 +1,46 @@
+---
+- name: Install dependencies
+  yum:
+    name:
+      - gcc
+      - make
+    state: present
+
+- name: Check 'redis-{{ redis_version }}.tar.gz' exists
+  stat:
+    path: "{{ redis_path }}-{{ redis_version }}.tar.gz"
+  register: rt_tar
+
+- name: Copy 'redis-{{ redis_version }}.tar.gz'
+  copy:
+    src: "redis-{{ redis_version }}.tar.gz"
+    dest: "{{ redis_install_dir }}"
+  when: not rt_tar.stat.exists
+
+- name: Check '{{ redis_path }}' exists
+  stat:
+    path: "{{ redis_path }}"
+  register: rt_path
+
+- name: Extract 'redis-{{ redis_version }}' tarball
+  unarchive:
+    src: "{{ redis_path }}-{{ redis_version }}.tar.gz"
+    dest: "{{ redis_install_dir }}"
+    remote_src: yes
+  when: not rt_path.stat.exists
+
+- name: Rename '{{ redis_path }}-{{ redis_version }}' become '{{ redis_path }}'
+  shell: "mv {{ redis_path }}-{{ redis_version }} {{ redis_path }}"
+  when: not rt_path.stat.exists
+
+- name: Compile ...
+  make:
+    chdir: "{{ redis_path }}"
+  when: not rt_path.stat.exists
+
+- name: Create redis working directory
+  file:
+    path: "{{ redis_path }}/{{ item }}"
+    state: directory
+    mode: '0775'
+  loop: "{{ redis_directory }}"

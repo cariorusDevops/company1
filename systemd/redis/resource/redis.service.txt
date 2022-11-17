@@ -1,0 +1,12 @@
+[Unit]
+Description=Redis Server 5.0.14
+After=network.target
+
+[Service]
+ExecStart=/opt/redis/src/redis-server /opt/redis/redis.conf
+ExecStop=/opt/redis/src/redis-cli shutdown
+Type=notify
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

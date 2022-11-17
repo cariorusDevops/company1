@@ -1,0 +1,20 @@
+---
+
+- name: Make service_user.yml
+  template:
+    src: service_user.j2
+    dest: '{{ role_path }}/tasks/service-user.yml'
+  delegate_to: localhost
+  run_once: true
+
+- include_tasks: jump-user.yml
+  when:
+    - inventory_hostname == jump_inventory_hostname
+
+- include_tasks: service-user.yml
+  vars:
+    children_list: "{{ item.target }}"
+  when:
+    - inventory_hostname in groups[children_list]
+
+- include_tasks: remove-user.yml

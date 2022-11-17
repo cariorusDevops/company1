@@ -1,0 +1,5 @@
+---
+- hosts: redis
+  become: yes
+  roles:
+    - role: redis-5.0.14

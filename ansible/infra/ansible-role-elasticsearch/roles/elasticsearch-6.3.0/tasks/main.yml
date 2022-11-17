@@ -1,0 +1,22 @@
+---
+
+- name: Make user.yml
+  template:
+    src: es_user.j2
+    dest: "{{ role_path }}/tasks/user.yml"
+  delegate_to: localhost
+  run_once: true
+
+- include_tasks: user.yml
+
+- include_tasks: install.yml
+
+- include_tasks: configure.yml
+
+- include_tasks: kernel.yml
+
+- name: Enable service on boot & Start elasticsearch service
+  service: 
+    enabled: yes
+    name: "{{ es_daemon }}"
+    state: started

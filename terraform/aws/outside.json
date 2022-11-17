@@ -1,0 +1,62 @@
+[
+  {
+    "name": "prod-nginx-forehead-01",
+    "type": "t3.large",
+    "size": 100,
+    "secutiry_group": {
+      "description": "Group for Prod Nginx Forehead 01"
+    },
+    "ip_v4": "10.9.22.11",
+    "ami_name": "terraform-u2-nginx-forehead-01"
+  },
+  {
+    "name": "prod-nginx-forehead-02",
+    "type": "t3.large",
+    "size": 100,
+    "secutiry_group": {
+      "description": "Group for Prod Nginx Forehead 02"
+    },
+    "ip_v4": "10.9.22.12",
+    "ami_name": "terraform-u2-nginx-forehead-02"
+  },
+  {
+    "name": "prod-nginx-backend-01",
+    "type": "t3.large",
+    "size": 100,
+    "secutiry_group": {
+      "description": "Group for Prod Nginx Backend 01"
+    },
+    "ip_v4": "10.9.22.13",
+    "ami_name": "terraform-u2-nginx-backend-01"
+  },
+  {
+    "name": "prod-nginx-pay",
+    "type": "t3.large",
+    "size": 100,
+    "secutiry_group": {
+      "description": "Group for Prod Nginx Pay"
+    },
+    "ip_v4": "10.9.22.14",
+    "ami_name": "terraform-u2-nginx-pay"
+  },
+  {
+    "name": "prod-employee-jump",
+    "type": "t3.small",
+    "size": 100,
+    "secutiry_group": {
+      "description": "Group for Prod Employee Jump"
+    },
+    "ip_v4": "10.9.22.101",
+    "ami_name": "terraform-u2-employee-jump"
+  },
+  {
+    "name": "prod-rd-jump",
+    "type": "t3.small",
+    "size": 20,
+    "secutiry_group": {
+      "description": "Group for Prod RD Jump"
+    },
+    "ip_v4": "10.9.22.102",
+    "ami_name": "terraform-u2-rd-jump"
+  }
+]

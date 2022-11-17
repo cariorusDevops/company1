@@ -1,0 +1,15 @@
+---
+- hosts: es
+  become: yes
+  roles:
+    - java-1.8.0_161
+    - elasticsearch-6.3.0
+  vars:
+    thegroups: es
+    es_config:
+      cluster.name: "wanbo-es"
+    jvm_config:
+      heap_size: 512m
+    append_groups:
+      enabled: true
+      groups: root, superadmin

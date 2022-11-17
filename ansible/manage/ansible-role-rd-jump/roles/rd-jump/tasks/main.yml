@@ -1,0 +1,28 @@
+---
+
+- name: Make create_user.yml
+  template:
+    src: create_user.j2
+    dest: '{{ role_path }}/tasks/create-user.yml'
+  delegate_to: localhost
+  run_once: true
+
+- name: Make service-user.yml
+  template:
+    src: service_user.j2
+    dest: '{{ role_path }}/tasks/service-user.yml'
+  delegate_to: localhost
+  run_once: true
+
+- include_tasks: create-user.yml
+  when:
+    - inventory_hostname == rd_jump_inventory_hostname
+
+- include_tasks: service-user.yml
+  vars:
+    children_list: "{{ item.target }}"
+  when:
+    - item.name == "rdtest"
+    - inventory_hostname in groups[children_list]
+
+- include_tasks: remove-user.yml

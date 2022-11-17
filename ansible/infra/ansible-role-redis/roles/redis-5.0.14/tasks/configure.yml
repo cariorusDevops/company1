@@ -1,0 +1,23 @@
+---
+- name: Add redis-cli to '/usr/bin'
+  file:
+    src: "{{ redis_path }}/src/{{ item }}"
+    dest: "/usr/bin/{{ item }}"
+    state: link
+  loop: "{{ redis_bin }}"
+
+- name: Setup redis.conf
+  template:
+    src: redis_conf.j2
+    dest: "{{ redis_path }}/redis.conf"
+    owner: root
+    group: root
+    mode: '0664'
+
+- name: Setup redis systemd
+  template:
+    src: redis_systemd.j2
+    dest: "{{ redis_systemd }}"
+    owner: root
+    group: root
+    mode: '0644'
