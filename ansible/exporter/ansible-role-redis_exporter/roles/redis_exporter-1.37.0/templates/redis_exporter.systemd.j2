@@ -1,0 +1,13 @@
+[Unit]
+Description=Redis Exporter {{ redis_exporter_version }}
+After=network.target
+
+[Service]
+Type=simple
+ExecStart={{ redis_exporter_path }}/redis_exporter \
+    --web.listen-address "{{ exporter_listen_address }}" \
+    --redis.addr "{{ redis_address }}" \
+    --redis.password '{{ redis_password }}'
+
+[Install]
+WantedBy=multi-user.target

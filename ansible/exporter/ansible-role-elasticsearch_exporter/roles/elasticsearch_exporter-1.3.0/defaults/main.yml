@@ -1,0 +1,2 @@
+---
+es_exporter_path: /opt/elasticsearch_exporter-{{ es_exporter_version }}

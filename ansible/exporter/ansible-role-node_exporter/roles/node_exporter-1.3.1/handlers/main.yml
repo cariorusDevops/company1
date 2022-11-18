@@ -1,0 +1,6 @@
+---
+- name: Enable Service on Boot & Start node_exporter
+  service:
+    enabled: yes
+    name: "{{ node_exporter_daemon }}"
+    state: started

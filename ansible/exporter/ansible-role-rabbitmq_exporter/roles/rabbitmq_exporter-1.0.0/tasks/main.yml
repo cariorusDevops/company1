@@ -1,0 +1,38 @@
+---
+- name: Check '{{ rabbitmq_exporter_path }}-RC13_linux_amd64.tar.gz' exists
+  stat:
+    path: "{{ rabbitmq_exporter_path }}-RC13_linux_amd64.tar.gz"
+  register: rt_tar
+
+- name: Copy 'rabbitmq_exporter_{{ rabbitmq_exporter_version }}-RC13_linux_amd64.tar.gz'
+  copy: 
+    src: "rabbitmq_exporter_{{ rabbitmq_exporter_version }}-RC13_linux_amd64.tar.gz"
+    dest: "{{ rabbitmq_exporter_install_dir }}"
+  when: not rt_tar.stat.exists
+
+- name: Check '{{ rabbitmq_exporter_path }}' exists
+  stat:
+    path: "{{ rabbitmq_exporter_path }}"
+  register: rt_path
+
+- name: Extract '{{ rabbitmq_exporter_path }}-RC13_linux_amd64.tar.gz' tarball
+  unarchive:
+    src: "{{ rabbitmq_exporter_path }}-RC13_linux_amd64.tar.gz"
+    dest: "{{ rabbitmq_exporter_install_dir }}"
+    owner: root
+    group: root
+    remote_src: yes
+  when: not rt_path.stat.exists
+
+- name: Rename '{{ rabbitmq_exporter_path }}-RC13_linux_amd64' become '{{ rabbitmq_exporter_path }}'
+  shell: "mv {{ rabbitmq_exporter_path }}-RC13_linux_amd64 {{ rabbitmq_exporter_path }}"
+  when: not rt_path.stat.exists
+
+- name: Setup systemd
+  template:
+    src: rabbitmq_exporter.systemd.j2
+    dest: "{{ rabbitmq_exporter_systemd }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "Enable service on boot & Start rabbitmq_exporter service"

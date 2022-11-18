@@ -60,6 +60,13 @@ systemctl start redis
   - [rabbitmq](logrotate/rabbitmq)
   - [redis](logrotate/redis)
 
+#### 自動化部署 Prometheus 生態套件
+* Exporter File
+  - [ansible-role-elasticsearch_exporter](ansible/exporter/ansible-role-elasticsearch_exporter/README.md)
+  - [ansible-role-node_exporter](ansible/exporter/ansible-role-node_exporter/README.md)
+  - [ansible-role-rabbitmq_exporter](ansible/exporter/ansible-role-rabbitmq_exporter/README.md)
+  - [ansible-role-redis_exporter](ansible/exporter/ansible-role-redis_exporter/README.md)
+
 #### 專案 - 監控產品項目
 * 專案所使用之工具 Diagram
 ![diagram](monitor/diagram.png)

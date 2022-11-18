@@ -1,0 +1,38 @@
+---
+- name: Check '{{ node_exporter_path }}.linux-amd64.tar.gz' Exists
+  stat:
+    path: "{{ node_exporter_path }}.linux-amd64.tar.gz"
+  register: rt_tar
+
+- name: Copy 'node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz'
+  copy: 
+    src: node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz
+    dest: "{{ node_exporter_installed_dir }}"
+  when: not rt_tar.stat.exists
+
+- name: Check '{{ node_exporter_path }}' Exists
+  stat:
+    path: "{{ node_exporter_path }}"
+  register: rt_path
+
+- name: Extract '{{ node_exporter_path }}.linux-amd64.tar.gz' Tarball
+  unarchive:
+    src: "{{ node_exporter_path }}.linux-amd64.tar.gz"
+    dest: "{{ node_exporter_installed_dir }}"
+    owner: root
+    group: root
+    remote_src: yes
+  when: not rt_path.stat.exists
+
+- name: Rename '{{ node_exporter_path }}.linux-amd64' become '{{ node_exporter_path }}'
+  shell: "mv {{ node_exporter_path }}.linux-amd64 {{ node_exporter_path }}"
+  when: not rt_path.stat.exists
+
+- name: Setup Systemd 
+  template:
+    src: node_exporter.init.j2
+    dest: "{{ node_exporter_systemd }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "Enable Service on Boot & Start node_exporter"

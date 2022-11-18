@@ -1,0 +1,13 @@
+[Unit]
+Description=Node Exporter {{ node_exporter_version }}
+After=network.target
+
+[Service]
+Type=simple
+ExecStart={{ node_exporter_path }}/node_exporter \
+    --web.listen-address "{{ exporter_listen_address }}" \
+    --log.level "{{ exporter_log_level }}" \
+    --log.format "{{ exporter_log_format }}"
+
+[Install]
+WantedBy=multi-user.target

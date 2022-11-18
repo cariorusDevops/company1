@@ -1,0 +1,6 @@
+---
+- name: Enable service on boot & Start elasticsearch_exporter service
+  service: 
+    enabled: yes
+    name: "{{ es_exporter_daemon }}"
+    state: started

@@ -1,0 +1,6 @@
+---
+- name: Enable service on boot & Start redis_exporter service
+  service: 
+    enabled: yes
+    name: "{{ redis_exporter_daemon }}"
+    state: started

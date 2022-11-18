@@ -1,0 +1,6 @@
+---
+- name: Enable service on boot & Start rabbitmq_exporter service
+  service: 
+    enabled: yes
+    name: "{{ rabbitmq_exporter_daemon }}"
+    state: started

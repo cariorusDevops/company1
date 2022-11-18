@@ -1,0 +1,15 @@
+# Ansible Role: redis_exporter - 1.37.0
+
+## Example Playook
+
+```yaml
+---
+- hosts: redis
+  become: yes
+  roles:
+    - redis_exporter-1.37.0
+  vars:
+    redis_address: "redis://localhost:6379"
+    redis_password: "global!#"
+    exporter_listen_address: "0.0.0.0:9121"
+```

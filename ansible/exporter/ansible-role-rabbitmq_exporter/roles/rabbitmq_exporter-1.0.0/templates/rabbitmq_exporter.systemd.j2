@@ -1,0 +1,17 @@
+[Unit]
+Description=RabbitMQ Exporter {{ rabbitmq_exporter_version }}
+After=network.target
+
+[Service]
+Type=simple
+Environment=RABBIT_URL={{ rabbitmq_exporter_url }}
+Environment=RABBIT_USER={{ rabbitmq_exporter_user }}
+Environment=RABBIT_PASSWORD={{ rabbitmq_exporter_password }}
+Environment=PUBLISH_ADDR={{ rabbitmq_exporter_address }}
+Environment=PUBLISH_PORT={{ rabbitmq_exporter_listen_port }}
+Environment=OUTPUT_FORMAT={{ rabbitmq_exporter_logging_output_format }}
+Environment=LOG_LEVEL={{ rabbitmq_exporter_logging_level }}
+ExecStart={{ rabbitmq_exporter_path }}/rabbitmq_exporter 
+
+[Install]
+WantedBy=multi-user.target

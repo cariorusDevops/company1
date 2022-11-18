@@ -1,0 +1,45 @@
+---
+- name: Make elasticsearch_exporter.systemd.j2.yml
+  template:
+    src: elasticsearch_exporter.init.j2
+    dest: '{{ role_path }}/templates/elasticsearch_exporter.systemd.j2'
+  delegate_to: localhost
+  run_once: true
+
+- name: Check '{{ es_exporter_path }}.linux-amd64.tar.gz' exists
+  stat:
+    path: "{{ es_exporter_path }}.linux-amd64.tar.gz"
+  register: rt_tar
+
+- name: Copy 'elasticsearch_exporter-{{ es_exporter_version }}.linux-amd64.tar.gz'
+  copy: 
+    src: "elasticsearch_exporter-{{ es_exporter_version }}.linux-amd64.tar.gz"
+    dest: "{{ es_exporter_install_dir }}"
+  when: not rt_tar.stat.exists
+
+- name: Check '{{ es_exporter_path }}' exists
+  stat:
+    path: "{{ es_exporter_path }}"
+  register: rt_path
+
+- name: Extract '{{ es_exporter_path }}.linux-amd64.tar.gz' tarball
+  unarchive:
+    src: "{{ es_exporter_path }}.linux-amd64.tar.gz"
+    dest: "{{ es_exporter_install_dir }}"
+    owner: root
+    group: root
+    remote_src: yes
+  when: not rt_path.stat.exists
+
+- name: Rename '{{ es_exporter_path }}.linux-amd64' become '{{ es_exporter_path }}'
+  shell: "mv {{ es_exporter_path }}.linux-amd64 {{ es_exporter_path }}"
+  when: not rt_path.stat.exists
+
+- name: Setup systemd
+  template:
+    src: elasticsearch_exporter.systemd.j2
+    dest: "{{ es_exporter_systemd }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: "Enable service on boot & Start elasticsearch_exporter service"

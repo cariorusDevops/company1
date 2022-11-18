@@ -1,0 +1,5 @@
+---
+rabbitmq_exporter_install_dir: /opt
+rabbitmq_exporter_version: 1.0.0
+rabbitmq_exporter_daemon: rabbitmq_exporter
+rabbitmq_exporter_systemd: "/etc/systemd/system/{{ rabbitmq_exporter_daemon }}.service"

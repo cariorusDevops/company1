@@ -1,0 +1,2 @@
+---
+rabbitmq_exporter_path: /opt/rabbitmq_exporter_{{ rabbitmq_exporter_version }}

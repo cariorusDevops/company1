@@ -1,0 +1,2 @@
+---
+redis_exporter_path: /opt/redis_exporter-v{{ redis_exporter_version }}

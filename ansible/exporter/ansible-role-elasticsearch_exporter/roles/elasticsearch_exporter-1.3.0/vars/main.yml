@@ -1,0 +1,5 @@
+---
+es_exporter_install_dir: /opt
+es_exporter_version: 1.3.0
+es_exporter_daemon: elasticsearch_exporter
+es_exporter_systemd: "/etc/systemd/system/{{ es_exporter_daemon }}.service"
